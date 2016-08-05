@@ -1,0 +1,31 @@
+{
+  "name": "ui-angular-decorators",
+  "version": "1.0.0",
+  "description": "A set of TypeScript decorators to make working with Angular easier",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "angular": "^1.5.8",
+    "angular-mocks": "^1.5.8",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "del": "^2.2.1",
+    "gulp": "^3.9.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.1.2",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.1.0",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "rollup": "^0.34.1",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-commonjs": "^3.3.1",
+    "rollup-plugin-node-resolve": "^1.7.2",
+    "rollup-plugin-typescript": "^0.7.7",
+    "typescript": "^2.0.0"    
+  },
+  "scripts": {
+    "test": "gulp spec"
+  },
+  "author": "RightScale, André Rieussec",
+  "license": "MIT"
+}
