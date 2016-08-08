@@ -35,7 +35,7 @@ Then you can use this copy from the dependent package using
 
 ## Contributors
 
-* André Rieussec (@Ventajou)
+* [André Rieussec](https://github.com/ventajou)
 
 ## License
 
