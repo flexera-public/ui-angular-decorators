@@ -1,6 +1,6 @@
 {
-  "name": "ui-angular-decorators",
-  "version": "1.0.0",
+  "name": "@rightscale/ui-angular-decorators",
+  "version": "0.0.1",
   "description": "A set of TypeScript decorators to make working with Angular easier",
   "main": "index.js",
   "dependencies": {},

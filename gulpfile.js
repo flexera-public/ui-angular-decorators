@@ -73,7 +73,7 @@ gulp.task('spec', ['spec:compile'], (cb) => {
     }).start();
 });
 
-gulp.task('spec:debug', ['spec:compile'], (cb) => {
+gulp.task('spec:debug', ['spec:compile'], () => {
   var path = require('path');
   new karma.Server(
     {

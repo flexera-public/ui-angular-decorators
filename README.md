@@ -6,7 +6,7 @@ A set of TypeScript decorators to make working with Angular easier
 
 Install it from npm:
 
-    npm i ui-angular-decorators
+    npm i @rightscale/ui-angular-decorators
 
 ### Setup
 
@@ -18,7 +18,7 @@ Install dependencies with
 
 In your application, import the library in your `index.ts` to make it available globally
 
-    import ngModule from 'ui-angular-decorators'
+    import ngModule from '@rightscale/ui-angular-decorators'
 
 Please see the [test fixtures](src/fixtures.ts) for usage details.
 
@@ -31,7 +31,7 @@ the library available:
 
 Then you can use this copy from the dependent package using
 
-    npm link ui-angular-decorators
+    npm link @rightscale/ui-angular-decorators
 
 ## Contributors
 
