@@ -115,6 +115,10 @@ describe(Module.name, () => {
   });
 
   describe('service', () => {
+    it('should register a service');
+    it('should support injecting a service by class in a service');
+    it('should support injecting a service by string in a service');
+    it('should support injecting multiple services using a mix of class and string');
   });
 
 });

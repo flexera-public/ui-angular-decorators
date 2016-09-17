@@ -1,6 +1,5 @@
 import Options from './options';
-import Injectable from './Injectable';
-import ServiceProviderClass from './serviceProviderClass';
+import Injectable from './injectable';
 
 /**
  * Wraps the Angular module and provides utility decorator functions

@@ -1,8 +1,8 @@
 {
   "name": "@rightscale/ui-angular-decorators",
-  "version": "0.0.2",
+  "version": "0.0.0",
   "description": "A set of TypeScript decorators to make working with Angular easier",
-  "main": "index.js",
+  "main": "index.ts",
   "dependencies": {},
   "devDependencies": {
     "angular": "^1.5.8",
@@ -30,5 +30,13 @@
     "test": "gulp spec"
   },
   "author": "RightScale, André Rieussec",
-  "license": "MIT"
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rightscale/ui-angular-decorators/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rightscale/ui-angular-decorators"
+  },
+  "homepage": "https://github.com/rightscale/ui-angular-decorators"
 }
