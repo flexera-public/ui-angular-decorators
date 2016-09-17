@@ -43,7 +43,7 @@ function compile(source, destination) {
     ],
     sourceMap: true
   }).then(bundle => {
-    return bundle.write({ dest: destination });
+    return bundle.write({ dest: destination, sourceMap: true });
   })
 }
 
@@ -57,7 +57,7 @@ gulp.task('clean', cb => {
  */
 
 gulp.task('spec:compile', () => {
-  return compile('src/spec.ts', '.tmp/spec.js');
+  return compile('src/spec/spec.ts', '.tmp/spec.js');
 })
 
 gulp.task('spec', ['spec:compile'], (cb) => {

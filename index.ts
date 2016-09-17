@@ -1,2 +1,2 @@
-import ngModule from './src'
-export default ngModule
+import Module from './src/module';
+export default Module;
