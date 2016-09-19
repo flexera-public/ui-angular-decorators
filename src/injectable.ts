@@ -1,5 +1,17 @@
 import Options from './options';
-import ServiceProviderClass from './serviceProviderClass';
+
+/**
+ * A stricter form of the service provider class as defined in the Angular typings
+ * This one requires an interface to be declared for the provided service in order
+ * to enforce type information all the way through.
+ */
+interface ServiceProvider<T> extends ng.IServiceProvider {
+  $get: () => T;
+}
+
+interface ServiceProviderClass<T> extends ng.IServiceProviderClass {
+  new (...args: any[]): ServiceProvider<T>;
+}
 
 /**
  * Used internally to allow the optional inject syntax
@@ -92,7 +104,7 @@ export default class Injectable {
     if (this.dependencies && this.dependencies.length) {
       return this.injectables(postfix).concat(target);
     }
-    return target;
+    return [target];
   }
 
   private classInject(target: Function, postfix?: string) {
