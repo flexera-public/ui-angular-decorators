@@ -43,9 +43,22 @@ function compile(source, destination) {
     ],
     sourceMap: true
   }).then(bundle => {
-    return bundle.write({ dest: destination });
+    return bundle.write({ dest: destination, sourceMap: true });
   })
 }
+
+gulp.task('lint', () => {
+  var tslint = require('gulp-tslint');
+
+  return gulp.src(['src/**/*.ts', 'demo/**/*.ts'])
+    .pipe(tslint({
+      formattersDirectory: 'node_modules/custom-tslint-formatters/formatters',
+      formatter: 'grouped'
+    }))
+    .pipe(tslint.report({
+      summarizeFailureOutput: true
+    }));
+});
 
 gulp.task('clean', cb => {
   var del = require('del');
@@ -57,10 +70,10 @@ gulp.task('clean', cb => {
  */
 
 gulp.task('spec:compile', () => {
-  return compile('src/spec.ts', '.tmp/spec.js');
+  return compile('src/spec/spec.ts', '.tmp/spec.js');
 })
 
-gulp.task('spec', ['spec:compile'], (cb) => {
+gulp.task('spec', ['lint', 'spec:compile'], (cb) => {
   var path = require('path');
   new karma.Server(
     { configFile: path.resolve('karma.conf.js') },
