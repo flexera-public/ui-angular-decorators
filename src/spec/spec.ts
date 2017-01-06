@@ -1,4 +1,4 @@
-import 'angular';
+import angular from 'angular';
 import 'angular-mocks/angular-mocks';
 import Module from '../../index';
 import * as Fixtures from './fixtures';

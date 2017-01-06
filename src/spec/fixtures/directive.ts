@@ -19,14 +19,16 @@ app.directive(function Directive() {
 app
   .inject(Services.ServiceWithNoDependency)
   .directive(function DirectiveWithDependency(s: Services.ServiceWithNoDependency): ng.IDirective {
-  return {
-    template: '<div>{{ $ctrl.message }}</div>',
-    controller: function() {
-      this.message = s.value;
-    },
-    controllerAs: '$ctrl'
-  };
-});
+    return {
+      template: '<div>{{ $ctrl.message }}</div>',
+      // tslint:disable-next-line:object-literal-shorthand
+      controller: function () {
+        // can't use an arrow function here because we want "this" to be correct in regard to the Angular scope
+        this.message = s.value;
+      },
+      controllerAs: '$ctrl'
+    };
+  });
 
 // Declare a directive with an explicit name
 app.directive(() => {

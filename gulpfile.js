@@ -15,13 +15,6 @@ function compile(source, destination) {
     treeshake: false,
     plugins: [
       typescript({
-        target: 'ES6',
-        module: 'es2015',
-        moduleResolution: 'node',
-        emitDecoratorMetadata: false,
-        experimentalDecorators: true,
-        noImplicitAny: true,
-        removeComments: true,
         typescript: require('typescript')
       }),
       babel({
@@ -41,9 +34,14 @@ function compile(source, destination) {
         preferBuiltins: false
       })
     ],
-    sourceMap: true
+    sourceMap: true,
+    treeshake: false
   }).then(bundle => {
-    return bundle.write({ dest: destination, sourceMap: true });
+    return bundle.write({
+      dest: destination,
+      sourceMap: true,
+      format: 'es'
+    });
   })
 }
 

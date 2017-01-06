@@ -1,5 +1,6 @@
-import Options from './options';
+import angular from 'angular';
 import Injectable from './injectable';
+import Options from './options';
 
 /**
  * Wraps the Angular module and provides utility decorator functions

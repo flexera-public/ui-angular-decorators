@@ -1,6 +1,6 @@
 import { app } from './module';
-import * as Services from './service';
 import * as Providers from './provider';
+import * as Services from './service';
 
 // Declare a controller
 @app.controller

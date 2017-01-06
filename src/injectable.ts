@@ -46,7 +46,7 @@ export default class Injectable {
    */
   controller = (target: Function) => {
     this.classInject(target);
-    this.module.controller(target.name, target);
+    this.module.controller(target.name, <any>target); // TODO: better solution for the any stuff
   }
 
   /**
