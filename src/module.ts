@@ -1,11 +1,11 @@
 import angular from 'angular';
-import Injectable from './injectable';
-import Options from './options';
+import { Injectable } from './injectable';
+import { Options } from './options';
 
 /**
  * Wraps the Angular module and provides utility decorator functions
  */
-export default class Module {
+export class Module {
 
   /**
    * The original Angular module

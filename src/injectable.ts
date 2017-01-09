@@ -1,4 +1,4 @@
-import Options from './options';
+import { Options } from './options';
 
 /**
  * A stricter form of the service provider class as defined in the Angular typings
@@ -16,7 +16,7 @@ interface ServiceProviderClass<T> extends ng.IServiceProviderClass {
 /**
  * Used internally to allow the optional inject syntax
  */
-export default class Injectable {
+export class Injectable {
   constructor(
     private module: ng.IModule,
     private dependencies?: any[],

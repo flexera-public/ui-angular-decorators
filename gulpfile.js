@@ -12,7 +12,6 @@ var nodeResolve = require('rollup-plugin-node-resolve');
 function compile(source, destination) {
   return rollup.rollup({
     entry: source,
-    treeshake: false,
     plugins: [
       typescript({
         typescript: require('typescript')
@@ -34,8 +33,7 @@ function compile(source, destination) {
         preferBuiltins: false
       })
     ],
-    sourceMap: true,
-    treeshake: false
+    sourceMap: true
   }).then(bundle => {
     return bundle.write({
       dest: destination,
