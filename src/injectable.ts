@@ -1,4 +1,5 @@
 import { Options } from './options';
+import * as Types from './types';
 
 /**
  * A stricter form of the service provider class as defined in the Angular typings
@@ -26,7 +27,7 @@ export class Injectable {
   /**
    * Registers a class as an Angular service
    */
-  service = (target: Function) => {
+  service = (target: Types.InjectableClassWithParams<Function>) => {
     this.classInject(target);
     this.module.service(target.name, target);
   }
@@ -44,7 +45,7 @@ export class Injectable {
   /**
    * Registers a class as an Angular controller
    */
-  controller = (target: Function) => {
+  controller = (target: Types.InjectableClassWithParams<ng.IController>) => {
     this.classInject(target);
     this.module.controller(target.name, <any>target); // TODO: better solution for the any stuff
   }
@@ -54,7 +55,7 @@ export class Injectable {
    * Automatically sets the class as the controller.
    */
   component(options?: ng.IComponentOptions, name?: string) {
-    return (target: any) => {
+    return (target: Types.InjectableClassWithParams<ng.IController>) => {
       this.classInject(target);
       options = options || {};
       options.controller = target;
@@ -67,11 +68,11 @@ export class Injectable {
   /**
    * Declares a directive using the provided dependencies
    */
-  directive(fn: ng.IDirectiveFactory, name?: string) {
-    if (!name && !fn.name) {
-      throw 'Directives should be declared with a named function or you should explicitly provide a name.';
-    }
-    this.module.directive(name || this.options.prefix + fn.name, this.functionInject(fn));
+  directive(name?: string) {
+    return (target: Types.DirectiveClass) => {
+      let instance = new target();
+      this.module.directive(name || this.options.prefix + target.name, this.functionInject(instance.definition));
+    };
   }
 
   /**

@@ -1,6 +1,7 @@
 import angular from 'angular';
 import { Injectable } from './injectable';
 import { Options } from './options';
+import * as Types from './types';
 
 /**
  * Wraps the Angular module and provides utility decorator functions
@@ -31,7 +32,7 @@ export class Module {
    * Registers a class as an Angular service.
    * Note: call inject() first to inject dependencies.
    */
-  service = (target: Function) => {
+  service = (target: Types.InjectableClassWithoutParams<Function>) => {
     this.injectable().service(target);
   }
 
@@ -47,7 +48,7 @@ export class Module {
    * Registers a class as an Angular controller
    * Note: call inject() first to inject dependencies.
    */
-  controller = (target: Function) => {
+  controller = (target: Types.InjectableClassWithoutParams<ng.IController>) => {
     this.injectable().controller(target);
   }
 
@@ -64,15 +65,15 @@ export class Module {
    * Declares an Angular directive.
    * Note: call inject() first to inject dependencies.
    */
-  directive(fn: ng.IDirectiveFactory, name?: string) {
-    this.injectable().directive(fn, name);
+  directive(name?: string) {
+    return this.injectable().directive(name);
   }
 
   /**
    * Declares an Angular configuration block with no dependency injection.
    * Note: call inject() first to inject dependencies.
    */
-  config(configFn: Function) {
+  config(configFn: () => void) {
     this.module.config(configFn);
   }
 
@@ -80,7 +81,7 @@ export class Module {
    * Declares an Angular run block with no dependency injection.
    * Note: call inject() first to inject dependencies.
    */
-  run(runFn: Function) {
+  run(runFn: () => void) {
     this.module.run(runFn);
   }
 
@@ -88,7 +89,7 @@ export class Module {
    * Declares an Angular filter with no dependency injection
    * Note: call inject() first to inject dependencies.
    */
-  filter(fn: Function, name?: string) {
+  filter(fn: () => void, name?: string) {
     this.injectable().filter(fn, name);
   }
 
@@ -97,7 +98,7 @@ export class Module {
    * The array can contain both strings and classes as long as the classes have been registered
    * as service using either the service or the provider decorator.
    */
-  inject(...services: any[]) {
+  inject(...services: Types.InjectableReferences) {
     return new Injectable(this.module, services, this.options);
   }
 

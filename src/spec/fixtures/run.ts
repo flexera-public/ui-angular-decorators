@@ -1,7 +1,7 @@
 import { app } from './module';
 import * as Services from './service';
 
-// Declares a run block with no dependencies 
+// Declares a run block with no dependencies
 export let runBlockRan = false;
 app.run(() => {
   runBlockRan = true;

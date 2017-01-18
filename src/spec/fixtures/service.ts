@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { app } from './module';
 
 // Declare a service

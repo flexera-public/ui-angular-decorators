@@ -1,3 +1,5 @@
+/* jshint quotmark:single */
+
 var gulp = require('gulp');
 
 var karma = require('karma');
