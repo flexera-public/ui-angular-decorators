@@ -3,10 +3,10 @@ var gulp = require('gulp');
 var karma = require('karma');
 
 var rollup = require('rollup');
-var babel = require('rollup-plugin-babel');
 var typescript = require('rollup-plugin-typescript');
 var commonjs = require('rollup-plugin-commonjs');
 var nodeResolve = require('rollup-plugin-node-resolve');
+var buble = require('rollup-plugin-buble');
 
 // Compiles and bundles TypeScript to JavaScript
 function compile(source, destination) {
@@ -16,10 +16,8 @@ function compile(source, destination) {
       typescript({
         typescript: require('typescript')
       }),
-      babel({
-        exclude: 'node_modules/**',
-        presets: [["es2015", { modules: false }]],
-        plugins: ["external-helpers"]
+      buble({
+        exclude: 'node_modules/**'
       }),
       commonjs({
         include: 'node_modules/**',
@@ -67,7 +65,7 @@ gulp.task('clean', cb => {
 
 gulp.task('spec:compile', () => {
   return compile('src/spec/spec.ts', '.tmp/spec.js');
-})
+});
 
 gulp.task('spec', ['lint', 'spec:compile'], (cb) => {
   var path = require('path');
