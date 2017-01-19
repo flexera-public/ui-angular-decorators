@@ -1,3 +1,5 @@
+/* tslint:disable:max-classes-per-file */
+
 import { app, appPrefix } from './module';
 import * as Services from './service';
 
@@ -6,51 +8,40 @@ export class DirectiveController {
   message = 'hello';
 }
 
-// Declare a directive with a named function
-app.directive(function Directive() {
-  return {
-    template: '<div>{{ $ctrl.message }}</div>',
-    controller: DirectiveController,
-    controllerAs: '$ctrl'
-  };
-});
+@app.directive() // Declare a directive with a named function
+@appPrefix.directive() // Declare a directive with a named function and a custom prefix
+export class Directive implements ng.IDirective {
+  definition(): ng.IDirective {
+    return {
+      template: '<div>{{ $ctrl.message }}</div>',
+      controller: DirectiveController,
+      controllerAs: '$ctrl'
+    };
+  }
+}
 
 // Declare a directive with a dependency
-app
-  .inject(Services.ServiceWithNoDependency)
-  .directive(function DirectiveWithDependency(s: Services.ServiceWithNoDependency): ng.IDirective {
-  return {
-    template: '<div>{{ $ctrl.message }}</div>',
-    controller: function() {
-      this.message = s.value;
-    },
-    controllerAs: '$ctrl'
-  };
-});
+@app.inject(Services.ServiceWithNoDependency).directive()
+export class DirectiveWithDependency {
+  definition(s: Services.ServiceWithNoDependency): ng.IDirective {
+    return {
+      template: '<div>{{ $ctrl.message }}</div>',
+      controller: function () {
+        this.message = s.value;
+      },
+      controllerAs: '$ctrl'
+    };
+  }
+}
 
-// Declare a directive with an explicit name
-app.directive(() => {
-  return {
-    template: '<div>{{ $ctrl.message }}</div>',
-    controller: DirectiveController,
-    controllerAs: '$ctrl'
-  };
-}, 'customDirectiveName');
-
-// Declare a directive with a named function and a custom prefix
-appPrefix.directive(function Directive() {
-  return {
-    template: '<div>{{ $ctrl.message }}</div>',
-    controller: DirectiveController,
-    controllerAs: '$ctrl'
-  };
-});
-
-// Declare a directive with a custom name and a custom prefix
-appPrefix.directive(() => {
-  return {
-    template: '<div>{{ $ctrl.message }}</div>',
-    controller: DirectiveController,
-    controllerAs: '$ctrl'
-  };
-}, 'otherCustomDirectiveName');
+@app.directive('customDirectiveName') // Declare a directive with an explicit name
+@appPrefix.directive('otherCustomDirectiveName') // Declare a directive with a custom name and a custom prefix
+export class DirectiveWithName {
+  definition(): ng.IDirective {
+    return {
+      template: '<div>{{ $ctrl.message }}</div>',
+      controller: DirectiveController,
+      controllerAs: '$ctrl'
+    };
+  }
+}

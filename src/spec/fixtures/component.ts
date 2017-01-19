@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { app, appPrefix } from './module';
 import * as Services from './service';
 

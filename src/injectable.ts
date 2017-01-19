@@ -1,4 +1,5 @@
-import Options from './options';
+import { Options } from './options';
+import * as Types from './types';
 
 /**
  * A stricter form of the service provider class as defined in the Angular typings
@@ -16,17 +17,24 @@ interface ServiceProviderClass<T> extends ng.IServiceProviderClass {
 /**
  * Used internally to allow the optional inject syntax
  */
-export default class Injectable {
+export class Injectable {
+
+  private injector: ng.auto.IInjectorService;
+
   constructor(
     private module: ng.IModule,
     private dependencies?: any[],
     private options?: Options
-  ) { }
+  ) {
+    module.run(['$injector', (injector: ng.auto.IInjectorService) => {
+      this.injector = injector;
+    }]);
+  }
 
   /**
    * Registers a class as an Angular service
    */
-  service = (target: Function) => {
+  service = (target: Types.InjectableClassWithParams<Object>) => {
     this.classInject(target);
     this.module.service(target.name, target);
   }
@@ -44,9 +52,9 @@ export default class Injectable {
   /**
    * Registers a class as an Angular controller
    */
-  controller = (target: Function) => {
+  controller = (target: Types.InjectableClassWithParams<ng.IController>) => {
     this.classInject(target);
-    this.module.controller(target.name, target);
+    this.module.controller(target.name, <any>target); // TODO: better solution for the any stuff
   }
 
   /**
@@ -54,7 +62,7 @@ export default class Injectable {
    * Automatically sets the class as the controller.
    */
   component(options?: ng.IComponentOptions, name?: string) {
-    return (target: any) => {
+    return (target: Types.InjectableClassWithParams<ng.IController>) => {
       this.classInject(target);
       options = options || {};
       options.controller = target;
@@ -67,11 +75,11 @@ export default class Injectable {
   /**
    * Declares a directive using the provided dependencies
    */
-  directive(fn: ng.IDirectiveFactory, name?: string) {
-    if (!name && !fn.name) {
-      throw 'Directives should be declared with a named function or you should explicitly provide a name.';
-    }
-    this.module.directive(name || this.options.prefix + fn.name, this.functionInject(fn));
+  directive(name?: string) {
+    return (target: Types.DirectiveClass) => {
+      let instance = new target();
+      this.module.directive(name || this.options.prefix + target.name, this.functionInject(instance.definition));
+    };
   }
 
   /**
@@ -100,21 +108,60 @@ export default class Injectable {
     this.module.filter(name, this.functionInject(fn));
   }
 
-  private functionInject(target: Function, postfix?: string) {
+  /**
+   * Returns a minification friendly injectable function declaration
+   */
+  function(fn: Function) {
+    return this.functionInject(fn);
+  }
+
+  /**
+   * Inject a dependency in a class property upon first use
+   */
+  property = (target: any, key: string) => {
+    if (!this.dependencies) {
+      throw `Property injection requires 1 dependency. No dependency is being injected into [${key}]`;
+    }
+    if (this.dependencies.length !== 1) {
+      // tslint:disable-next-line:max-line-length
+      throw `Property injection only works with 1 dependency. ${this.dependencies.length} dependencies were being injected into [${key}]`;
+    }
+
+    let val: any;
+    let refName = this.injectables()[0];
+
+    Object.defineProperty(target, key, {
+      enumerable: true,
+      get: () => {
+        if (!val) {
+          if (!this.injector) {
+            throw `Attempting to inject [${refName}] into [${key}] before the Angular injector is available`;
+          }
+          val = this.injector.get(refName);
+        }
+
+        return val;
+      },
+      set: () => {
+        throw `The property [${key}] is read-only`;
+      }
+    });
+  }
+
+  private functionInject(target: Function, suffix?: string) {
     if (this.dependencies && this.dependencies.length) {
-      return this.injectables(postfix).concat(target);
+      return this.injectables(suffix).concat(target);
     }
     return [target];
   }
 
-  private classInject(target: Function, postfix?: string) {
+  private classInject(target: Function, suffix?: string) {
     if (this.dependencies && this.dependencies.length) {
-      target.$inject = this.injectables(postfix);
+      target.$inject = this.injectables(suffix);
     }
   }
 
-  private injectables(postfix?: string) {
-    postfix = postfix || '';
-    return this.dependencies.map(s => s.name ? s.name + postfix : s);
+  private injectables(suffix = '') {
+    return this.dependencies.map(s => s.name ? s.name + suffix : s);
   }
 }

@@ -15,6 +15,10 @@
     "one-line": [true, "check-open-brace"],
     "interface-name": [true, "never-prefix"],
     "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-trailing-underscore"],
-    "no-empty": false
+    "no-empty": false,
+    "max-classes-per-file": false,
+    "only-arrow-functions": false,
+    "arrow-parens": false,
+    "object-literal-shorthand": false
   }
 }

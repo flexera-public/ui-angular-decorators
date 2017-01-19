@@ -1,3 +1,4 @@
+/* tslint:disable:max-classes-per-file */
 import { app } from './module';
 
 // Define the service offered by the provider
