@@ -241,5 +241,4 @@ describe(Module.name, () => {
       expect(o.bar.value).toEqual('test service');
     });
   });
-
 });

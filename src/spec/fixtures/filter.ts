@@ -7,7 +7,7 @@ app.filter(function filterWithFunctionName() {
 });
 
 // Declares a simple filter with a custom name
-app.filter(function filterWithCustomName() {
+app.filter(() => {
   return () => 'foo';
 }, 'customFilterName');
 
