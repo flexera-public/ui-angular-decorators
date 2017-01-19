@@ -18,11 +18,18 @@ interface ServiceProviderClass<T> extends ng.IServiceProviderClass {
  * Used internally to allow the optional inject syntax
  */
 export class Injectable {
+
+  private injector: ng.auto.IInjectorService;
+
   constructor(
     private module: ng.IModule,
     private dependencies?: any[],
     private options?: Options
-  ) { }
+  ) {
+    module.run(['$injector', (injector: ng.auto.IInjectorService) => {
+      this.injector = injector;
+    }]);
+  }
 
   /**
    * Registers a class as an Angular service
@@ -106,6 +113,31 @@ export class Injectable {
    */
   function(fn: Function) {
     return this.functionInject(fn);
+  }
+
+  property(target: any, key: string) {
+
+    let val: any;
+
+    Object.defineProperty(target, key, {
+      enumerable: true,
+      get: () => {
+        if (!val) {
+          let refName: string = (<Function>reference).name || <string>reference;
+          if (!this.injector) {
+            throw `Attempting to inject [${refName}] into [${key}] before the Angular injector is available`;
+          }
+          val = this.injector.get(refName);
+        }
+
+        return val;
+      },
+      set: () => {
+        throw `The property [${key}] is read-only`;
+      }
+    });
+
+
   }
 
   private functionInject(target: Function, suffix?: string) {

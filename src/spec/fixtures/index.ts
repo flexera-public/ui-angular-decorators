@@ -8,3 +8,4 @@ export * from './provider';
 export * from './run';
 export * from './service';
 export * from './function';
+export * from './property';
