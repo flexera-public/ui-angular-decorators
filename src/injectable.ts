@@ -115,15 +115,25 @@ export class Injectable {
     return this.functionInject(fn);
   }
 
-  property(target: any, key: string) {
+  /**
+   * Inject a dependency in a class property upon first use
+   */
+  property = (target: any, key: string) => {
+    if (!this.dependencies) {
+      throw `Property injection requires 1 dependency. No dependency is being injected into [${key}]`;
+    }
+    if (this.dependencies.length !== 1) {
+      // tslint:disable-next-line:max-line-length
+      throw `Property injection only works with 1 dependency. ${this.dependencies.length} dependencies were being injected into [${key}]`;
+    }
 
     let val: any;
+    let refName = this.injectables()[0];
 
     Object.defineProperty(target, key, {
       enumerable: true,
       get: () => {
         if (!val) {
-          let refName: string = (<Function>reference).name || <string>reference;
           if (!this.injector) {
             throw `Attempting to inject [${refName}] into [${key}] before the Angular injector is available`;
           }
@@ -136,8 +146,6 @@ export class Injectable {
         throw `The property [${key}] is read-only`;
       }
     });
-
-
   }
 
   private functionInject(target: Function, suffix?: string) {
@@ -153,8 +161,7 @@ export class Injectable {
     }
   }
 
-  private injectables(suffix?: string) {
-    suffix = suffix || '';
+  private injectables(suffix = '') {
     return this.dependencies.map(s => s.name ? s.name + suffix : s);
   }
 }

@@ -14,8 +14,6 @@ export class Module {
    */
   module: ng.IModule;
 
-  private injector: ng.auto.IInjectorService;
-
   constructor(
     public name: string,
     dependencies?: string[],
@@ -29,12 +27,6 @@ export class Module {
 
     // Create the angular module and keep a reference to it
     this.module = angular.module(name, dependencies || []);
-
-    this.module.run(['$injector', (injector: ng.auto.IInjectorService) => {
-      // tslint:disable-next-line:no-console
-      console.log('==> getting the injector!');
-      this.injector = injector;
-    }]);
   }
 
   /**
@@ -109,32 +101,6 @@ export class Module {
    */
   inject(...services: Types.InjectableReferences) {
     return new Injectable(this.module, services, this.options);
-  }
-
-  injectProperty(reference: string | Function) {
-    return (target: any, key: string) => {
-
-      let val: any;
-
-      Object.defineProperty(target, key, {
-        enumerable: true,
-        get: () => {
-          if (!val) {
-            let refName: string = (<Function>reference).name || <string>reference;
-            if (!this.injector) {
-              throw `Attempting to inject [${refName}] into [${key}] before the Angular injector is available`;
-            }
-            val = this.injector.get(refName);
-          }
-
-          return val;
-        },
-        set: () => {
-          throw `The property [${key}] is read-only`;
-        }
-      });
-
-    };
   }
 
   /**

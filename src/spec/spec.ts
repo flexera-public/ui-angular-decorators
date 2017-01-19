@@ -33,7 +33,7 @@ describe(Module.name, () => {
     return element;
   }
 
-  xdescribe('component', () => {
+  describe('component', () => {
     it('should register a component with Angular', () => {
       let element = renderElement('rs-component-with-default-prefix');
       expect(element.find('div').text()).toContain('hello');
@@ -65,7 +65,7 @@ describe(Module.name, () => {
     });
   });
 
-  xdescribe('config', () => {
+  describe('config', () => {
     it('should run a simple config block', () => {
       expect(Fixtures.configRan).toBe(true);
     });
@@ -75,7 +75,7 @@ describe(Module.name, () => {
     });
   });
 
-  xdescribe('controller', () => {
+  describe('controller', () => {
     it('should register a controller using its class name', () => {
       let controller = <Fixtures.ControllerWithNoDependency>$controller(Fixtures.ControllerWithNoDependency.name);
       expect(controller.value).toBe('test controller');
@@ -111,14 +111,14 @@ describe(Module.name, () => {
 
   });
 
-  xdescribe('function', () => {
+  describe('function', () => {
     it('should inject a service in the controller', () => {
       let element = renderElement('rs-directive-testing-function');
       expect(element.find('div').text()).toContain('test service');
     });
   });
 
-  xdescribe('directive', () => {
+  describe('directive', () => {
     it('should register a directive using a named function', () => {
       let element = renderElement('rs-directive');
       expect(element.find('div').text()).toContain('hello');
@@ -145,7 +145,7 @@ describe(Module.name, () => {
     });
   });
 
-  xdescribe('filter', () => {
+  describe('filter', () => {
     it('should register a filter using a named function', () => {
       let filter = $filter<() => string>('filterWithFunctionName');
       expect(filter()).toBe('foo');
@@ -162,7 +162,7 @@ describe(Module.name, () => {
     });
   });
 
-  xdescribe('provider', () => {
+  describe('provider', () => {
     it('should register a provider', inject([Fixtures.ProviderWithNoDependency.name,
     (service: Fixtures.ProvidedService) => {
       expect(service.foo).toBe('bar');
@@ -192,7 +192,7 @@ describe(Module.name, () => {
     );
   });
 
-  xdescribe('run', () => {
+  describe('run', () => {
     it('should run a simple run block', () => {
       expect(Fixtures.runBlockRan).toBe(true);
     });
@@ -202,7 +202,7 @@ describe(Module.name, () => {
     });
   });
 
-  xdescribe('service', () => {
+  describe('service', () => {
     it('should register a service',
       inject([Fixtures.ServiceWithNoDependency.name, (s: Fixtures.ServiceWithNoDependency) => {
         expect(s.value).toBe('test service');
