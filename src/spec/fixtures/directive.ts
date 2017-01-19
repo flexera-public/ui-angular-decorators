@@ -45,7 +45,3 @@ export class DirectiveWithName {
     };
   }
 }
-
-export class Foo implements ng.IController {
-
-}

@@ -1,4 +1,5 @@
 import angular from 'angular';
+import 'function.name-polyfill';
 import { Injectable } from './injectable';
 import { Options } from './options';
 import * as Types from './types';
@@ -32,7 +33,7 @@ export class Module {
    * Registers a class as an Angular service.
    * Note: call inject() first to inject dependencies.
    */
-  service = (target: Types.InjectableClassWithoutParams<Function>) => {
+  service = (target: Types.InjectableClassWithoutParams<Object>) => {
     this.injectable().service(target);
   }
 

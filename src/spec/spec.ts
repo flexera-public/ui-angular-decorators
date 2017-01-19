@@ -12,17 +12,19 @@ describe(Module.name, () => {
 
   beforeEach(angular.mock.module(Fixtures.app.name));
 
-  beforeEach(inject((
-    _$controller_: ng.IControllerService,
-    _$compile_: ng.ICompileService,
-    _$rootScope_: ng.IRootScopeService,
-    _$filter_: ng.IFilterService
-  ) => {
-    $controller = _$controller_;
-    $compile = _$compile_;
-    $rootScope = _$rootScope_;
-    $filter = _$filter_;
-  }));
+  beforeEach(inject(['$controller', '$compile', '$rootScope', '$filter',
+    (
+      controller: ng.IControllerService,
+      compile: ng.ICompileService,
+      rootScope: ng.IRootScopeService,
+      filter: ng.IFilterService
+    ) => {
+      $controller = controller;
+      $compile = compile;
+      $rootScope = rootScope;
+      $filter = filter;
+    }
+  ]));
 
   function renderElement(name: string) {
     let scope = $rootScope.$new();
@@ -107,6 +109,13 @@ describe(Module.name, () => {
       expect(controller.value).toBe('bar');
     });
 
+  });
+
+  describe('function', () => {
+    it('should inject a service in the controller', () => {
+      let element = renderElement('rs-directive-testing-function');
+      expect(element.find('div').text()).toContain('test service');
+    });
   });
 
   describe('directive', () => {

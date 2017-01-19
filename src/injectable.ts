@@ -27,7 +27,7 @@ export class Injectable {
   /**
    * Registers a class as an Angular service
    */
-  service = (target: Types.InjectableClassWithParams<Function>) => {
+  service = (target: Types.InjectableClassWithParams<Object>) => {
     this.classInject(target);
     this.module.service(target.name, target);
   }
@@ -101,21 +101,28 @@ export class Injectable {
     this.module.filter(name, this.functionInject(fn));
   }
 
-  private functionInject(target: Function, postfix?: string) {
+  /**
+   * Returns a minification friendly injectable function declaration
+   */
+  function(fn: Function) {
+    return this.functionInject(fn);
+  }
+
+  private functionInject(target: Function, suffix?: string) {
     if (this.dependencies && this.dependencies.length) {
-      return this.injectables(postfix).concat(target);
+      return this.injectables(suffix).concat(target);
     }
     return [target];
   }
 
-  private classInject(target: Function, postfix?: string) {
+  private classInject(target: Function, suffix?: string) {
     if (this.dependencies && this.dependencies.length) {
-      target.$inject = this.injectables(postfix);
+      target.$inject = this.injectables(suffix);
     }
   }
 
-  private injectables(postfix?: string) {
-    postfix = postfix || '';
-    return this.dependencies.map(s => s.name ? s.name + postfix : s);
+  private injectables(suffix?: string) {
+    suffix = suffix || '';
+    return this.dependencies.map(s => s.name ? s.name + suffix : s);
   }
 }
