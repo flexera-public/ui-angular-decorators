@@ -1,6 +1,6 @@
 import angular from 'angular';
 import 'angular-mocks/angular-mocks';
-import Module from '../../index';
+import Module from '../';
 import * as Fixtures from './fixtures';
 
 describe(Module.name, () => {

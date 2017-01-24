@@ -20,7 +20,7 @@ In your application, import the library in your `index.ts` to make it available 
 
     import ngModule from '@rightscale/ui-angular-decorators'
 
-Please see the [test fixtures](src/spec/fixtures) for usage details.
+Please see the [test fixtures](src/fixtures) for usage details.
 
 ### Working with a dependent package
 
