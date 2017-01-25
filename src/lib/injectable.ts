@@ -1,3 +1,6 @@
+// tslint:disable-next-line:no-reference
+/// <reference path="../extensions.d.ts" />
+
 import { Options } from './options';
 import * as Types from './types';
 
