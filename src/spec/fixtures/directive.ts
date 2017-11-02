@@ -10,7 +10,7 @@ export class DirectiveController {
 
 @app.directive() // Declare a directive with a named function
 @appPrefix.directive() // Declare a directive with a named function and a custom prefix
-export class Directive implements ng.IDirective {
+export class Directive {
   definition(): ng.IDirective {
     return {
       template: '<div>{{ $ctrl.message }}</div>',

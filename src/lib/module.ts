@@ -24,9 +24,12 @@ export class Module {
     if (!this.options.prefix) {
       this.options.prefix = 'rs';
     }
+    if (!this.options.angular) {
+      this.options.angular = angular;
+    }
 
     // Create the angular module and keep a reference to it
-    this.module = angular.module(name, dependencies || []);
+    this.module = this.options.angular.module(name, dependencies || []);
   }
 
   /**
