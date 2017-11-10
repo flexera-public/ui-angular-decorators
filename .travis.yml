@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - '6.9.3'
 before_deploy:
+  - npm run build
   - npm --no-git-tag-version version $TRAVIS_TAG
 deploy:
   skip_cleanup: true
