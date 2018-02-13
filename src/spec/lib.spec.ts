@@ -63,6 +63,13 @@ describe(Module.name, () => {
       let element = renderElement('other-custom-name');
       expect(element.find('div').text()).toContain('hello');
     });
+
+    it('should make the component name available as a static property on the class', () => {
+      expect(Fixtures.ComponentWithDefaultPrefix.$componentName).toBe('rsComponentWithDefaultPrefix');
+      expect(Fixtures.ComponentWithCustomName.$componentName).toBe('customName');
+      expect(Fixtures.ComponentWithCustomPrefix.$componentName).toBe('fooComponentWithCustomPrefix');
+      expect(Fixtures.ComponentWithCustomPrefixAndName.$componentName).toBe('otherCustomName');
+    });
   });
 
   describe('config', () => {

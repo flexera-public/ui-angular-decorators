@@ -69,9 +69,17 @@ export class Injectable {
       this.classInject(target);
       options = options || {};
       options.controller = target;
+      const componentName = name || this.options.prefix + target.name;
+
+      Object.defineProperty(target, '$componentName', {
+        enumerable: true,
+        get: () => componentName,
+        set: () => { throw Error('The property [$componentName] is read-only'); }
+      });
+
       this.module
         .controller(target.name, target)
-        .component(name || this.options.prefix + target.name, options);
+        .component(componentName, options);
     };
   }
 

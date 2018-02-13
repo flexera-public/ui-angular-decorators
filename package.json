@@ -2,7 +2,8 @@
   "name": "@rightscale/ui-angular-decorators",
   "version": "0.0.0",
   "description": "A set of TypeScript decorators to make working with Angular easier",
-  "main": "index.ts",
+  "main": "dist/es5/index.js",
+  "jsnext:main": "dist/es2017/index.js",
   "dependencies": {
     "angular": "^1.5.8",
     "function.name-polyfill": "^1.0.5",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "test": "gulp lib:spec",
-    "build": "tsc"
+    "build": "tsc -p tsconfig.es5.json && tsc -p tsconfig.es2017.json"
   },
   "author": "RightScale, André Rieussec",
   "license": "MIT",
