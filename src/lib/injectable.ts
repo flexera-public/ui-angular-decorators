@@ -69,7 +69,8 @@ export class Injectable {
       this.classInject(target);
       options = options || {};
       options.controller = target;
-      const componentName = name || this.options.prefix + target.name;
+      // The replace call is to account for rollup builds sometimes appending a suffix like $$1 to class names
+      const componentName = name || this.options.prefix + target.name.replace(/\$\$\d+$/, '');
 
       Object.defineProperty(target, '$componentName', {
         enumerable: true,
