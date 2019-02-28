@@ -1,5 +1,4 @@
 import angular from 'angular';
-import 'function.name-polyfill';
 import { Injectable } from './injectable';
 import { Options } from './options';
 import * as Types from './types';

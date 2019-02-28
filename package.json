@@ -4,15 +4,14 @@
   "description": "A set of TypeScript decorators to make working with Angular easier",
   "main": "dist/es5/index.js",
   "jsnext:main": "dist/es2017/index.js",
-  "dependencies": {
-    "angular": "^1.5.8",
-    "function.name-polyfill": "^1.0.5",
-    "@types/angular": "^1.5.23",
-    "@types/angular-mocks": "^1.5.8",
-    "@types/jasmine": "^2.5.40"
+  "peerDependencies": {
+    "angular": "^1.5.8"
   },
   "devDependencies": {
     "@rightscale/ui-build-tools": "0.0.0",
+    "@types/angular": "^1.5.23",
+    "@types/angular-mocks": "^1.5.8",
+    "@types/jasmine": "^2.5.40",
     "angular-mocks": "^1.5.8",
     "gulp": "^3.9.1",
     "typescript": "^2.5.3"
