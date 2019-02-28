@@ -12,6 +12,7 @@
     "@types/angular": "^1.5.23",
     "@types/angular-mocks": "^1.5.8",
     "@types/jasmine": "^2.5.40",
+    "angular": "^1.5.8",
     "angular-mocks": "^1.5.8",
     "gulp": "^3.9.1",
     "typescript": "^2.5.3"
