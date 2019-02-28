@@ -2,12 +2,13 @@ language: node_js
 node_js:
 - '6.9.3'
 before_deploy:
+  - npm i -g npm@latest
   - npm run build
   - npm --no-git-tag-version version $TRAVIS_TAG
 deploy:
   skip_cleanup: true
   provider: npm
-  email: christian.teijon+rightscaleci@rightscale.com
+  email: andre@ventajou.com
   api_key: "$NPM_TOKEN"
   on:
     tags: true
