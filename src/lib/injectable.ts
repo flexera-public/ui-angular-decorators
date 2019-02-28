@@ -142,7 +142,7 @@ export class Injectable {
     let val: any;
     let refName = this.injectables()[0];
 
-    Object.defineProperty(target, key, {
+    return {
       enumerable: true,
       get: () => {
         if (!val) {
@@ -157,7 +157,7 @@ export class Injectable {
       set: () => {
         throw `The property [${key}] is read-only`;
       }
-    });
+    } as any;
   }
 
   private functionInject(target: Function, suffix?: string) {
